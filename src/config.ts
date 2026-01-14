@@ -1,0 +1,43 @@
+import dotenv from 'dotenv';
+import cloudinary from 'cloudinary';
+dotenv.config({})
+
+class Config {
+  public NODE_ENV: string | undefined;
+  public CLIENT_URL: string | undefined;
+  public SENDER_EMAIL: string | undefined;
+  public SENDER_EMAIL_PASSWORD: string | undefined;
+  public RABBITMQ_ENDPOINT: string | undefined;
+  public ELASTIC_SEARCH_URL: string | undefined;
+  public ELASTIC_SEARCH_USERNAME: string | undefined;
+  public ELASTIC_SEARCH_PASSWORD: string | undefined;
+  public ELASTIC_SEARCH_CA: string | undefined;
+  public GATEWAY_JWT_TOKEN: string | undefined;
+  public JWT_TOKEN: string | undefined;
+  public API_GATEWAY_URL: string | undefined;
+  public DATABASE_HOST: string | undefined;
+  public DATABASE_USER: string | undefined;
+  public DATABASE_PASSWORD: string | undefined;
+  public DATABASE_NAME: string | undefined;
+
+  constructor() {
+    this.NODE_ENV = process.env.NODE_ENV || '';
+    this.SENDER_EMAIL = process.env.SENDER_EMAIL || '';
+    this.SENDER_EMAIL_PASSWORD = process.env.SENDER_EMAIL_PASSWORD || '';
+    this.RABBITMQ_ENDPOINT = process.env.RABBITMQ_ENDPOINT || '';
+    this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL || '';
+    this.ELASTIC_SEARCH_USERNAME = process.env.ELASTIC_SEARCH_USERNAME || '';
+    this.ELASTIC_SEARCH_PASSWORD = process.env.ELASTIC_SEARCH_PASSWORD || '';
+    this.ELASTIC_SEARCH_CA = process.env.ELASTIC_SEARCH_CA || '';
+    this.GATEWAY_JWT_TOKEN = process.env.GATEWAY_JWT_TOKEN || '1234';
+    this.JWT_TOKEN = process.env.JWT_TOKEN || '1234';
+    this.API_GATEWAY_URL = process.env.API_GATEWAY_URL || '';
+    this.DATABASE_HOST = process.env.DATABASE_HOST || 'localhost';
+    this.DATABASE_USER = process.env.DATABASE_USER || 'jishak';
+    this.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'jishakpw';
+    this.DATABASE_NAME = process.env.DATABASE_NAME || 'jishak-review';
+  }
+
+}
+
+export const config: Config = new Config();
