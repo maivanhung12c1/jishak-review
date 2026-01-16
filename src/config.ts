@@ -1,6 +1,22 @@
 import dotenv from 'dotenv';
 import cloudinary from 'cloudinary';
+import path from 'path';
+import { server } from 'typescript';
 dotenv.config({})
+
+if (process.env.ENABLE_APM === '1') {
+  // eslint-disable-next-line @typescript-eslint/no-var-requires
+  require('elastic-apm-node').start({
+    serviceName: process.env.ELASTIC_APM_SERVICE_NAME || 'jishak-review',
+    serverUrl: process.env.ELASTIC_APM_SERVER_URL || 'http://localhost:8200',
+    environment: process.env.NODE_ENV || 'development',
+    active: true,
+    logLevel: 'trace',
+    captureBody: 'all',
+    errorOnAbortedRequests: true,
+    captureErrorLogStackTraces: 'always',
+  });
+}
 
 class Config {
   public NODE_ENV: string | undefined;
@@ -28,7 +44,7 @@ class Config {
     this.ELASTIC_SEARCH_URL = process.env.ELASTIC_SEARCH_URL || '';
     this.ELASTIC_SEARCH_USERNAME = process.env.ELASTIC_SEARCH_USERNAME || '';
     this.ELASTIC_SEARCH_PASSWORD = process.env.ELASTIC_SEARCH_PASSWORD || '';
-    this.ELASTIC_SEARCH_CA = process.env.ELASTIC_SEARCH_CA || '';
+    this.ELASTIC_SEARCH_CA = path.resolve(process.cwd(), `${process.env.ELASTIC_SEARCH_CA}`) || '';
     this.GATEWAY_JWT_TOKEN = process.env.GATEWAY_JWT_TOKEN || '1234';
     this.JWT_TOKEN = process.env.JWT_TOKEN || '1234';
     this.API_GATEWAY_URL = process.env.API_GATEWAY_URL || '';
