@@ -35,6 +35,7 @@ class Config {
   public DATABASE_USER: string | undefined;
   public DATABASE_PASSWORD: string | undefined;
   public DATABASE_NAME: string | undefined;
+  public PORT: number | undefined;
 
   constructor() {
     this.NODE_ENV = process.env.NODE_ENV || '';
@@ -52,6 +53,7 @@ class Config {
     this.DATABASE_USER = process.env.DATABASE_USER || 'jishak';
     this.DATABASE_PASSWORD = process.env.DATABASE_PASSWORD || 'jishakpw';
     this.DATABASE_NAME = process.env.DATABASE_NAME || 'jishak-review';
+    this.PORT = process.env.PORT ? Number(process.env.PORT) : 4007;
   }
 
 }

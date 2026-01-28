@@ -13,8 +13,11 @@ import { appRoutes } from "@review/routes";
 import { Channel } from "amqplib";
 import { createConnection } from "@review/queues/connection";
 // import { consumerReviewFanoutMessage } from "@review/queues/review.consumer";
+import 'express-async-errors';
 
-const SERVER_PORT = 5007;
+
+
+const SERVER_PORT =  config.PORT;
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'review_server', 'debug', true, config.ELASTIC_SEARCH_USERNAME, config.ELASTIC_SEARCH_PASSWORD, config.ELASTIC_SEARCH_CA);
 
 let reviewChannel: Channel;
