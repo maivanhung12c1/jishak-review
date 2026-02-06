@@ -1,6 +1,6 @@
-def = namespace = "production"
-def = serviceName = "jishak-review"
-def = service = "Jishak Reviews"
+namespace = "production"
+serviceName = "jishak-review"
+service = "Jishak Reviews"
 
 def groovyMethods
 
