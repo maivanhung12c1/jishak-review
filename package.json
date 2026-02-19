@@ -20,7 +20,7 @@
   "type": "commonjs",
   "description": "",
   "dependencies": {
-    "@maivanhung12c1/jishak-shared": "^0.0.7",
+    "@maivanhung12c1/jishak-shared": "^0.0.8",
     "amqplib": "^0.10.9",
     "bcryptjs": "^3.0.3",
     "compression": "^1.8.1",

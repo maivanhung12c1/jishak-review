@@ -11,6 +11,7 @@ const pool: Pool = new Pool({
       password: `${config.DATABASE_PASSWORD}`,
       database: `${config.DATABASE_NAME}`,
       port: 5432,
+      ...(config.NODE_ENV !== 'development' && config.CLUSTER_TYPE === 'AWS' && { ssl: { rejectUnauthorized: false } }),
     });
 
 pool.on('error', (error: Error) => {

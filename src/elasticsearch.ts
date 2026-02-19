@@ -1,7 +1,7 @@
 import { ISellerGig, winstonLogger } from "@maivanhung12c1/jishak-shared";
 import { config } from '@review/config';
 import { Logger } from "winston";
-import { Client } from "@elastic/elasticsearch";
+import { Client, ClientOptions } from "@elastic/elasticsearch";
 import { CountResponse, GetResponse } from "@elastic/elasticsearch/lib/api/types";
 import * as fs from "fs";
 const log: Logger = winstonLogger(`${config.ELASTIC_SEARCH_URL}`, 'review_elastic_connection', 'debug', true, config.ELASTIC_SEARCH_USERNAME, config.ELASTIC_SEARCH_PASSWORD, config.ELASTIC_SEARCH_CA);
@@ -10,17 +10,24 @@ class ElasticSearch {
   public elasticSearchClient: Client;
 
   constructor() {
-    this.elasticSearchClient = new Client({
-      node: `${config.ELASTIC_SEARCH_URL || 'http://localhost:9200'}`,
+    const node = config.ELASTIC_SEARCH_URL || 'http://localhost:9200';
+
+    const clientOptions: ClientOptions = {
+      node,
       auth: {
         username: config.ELASTIC_SEARCH_USERNAME || 'elastic',
-        password: config.ELASTIC_SEARCH_PASSWORD || 'changeme'
+        password: config.ELASTIC_SEARCH_PASSWORD || 'changeme',
       },
-      tls: {
-        ca: fs.readFileSync(config.ELASTIC_SEARCH_CA || ''),
-        rejectUnauthorized: false
-      }
-    })
+    };
+
+    if (config.ELASTIC_SEARCH_CA) {
+      clientOptions.tls = {
+        ca: fs.readFileSync(config.ELASTIC_SEARCH_CA),
+        rejectUnauthorized: false,
+      };
+    }
+
+    this.elasticSearchClient = new Client(clientOptions);
   }
 
   public async checkConnection(): Promise<void> {
