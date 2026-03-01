@@ -43,7 +43,14 @@ pipeline {
                 git branch: 'main',
                     credentialsId: 'github',
                     url: 'https://github.com/maivanhung12c1/jishak-review'
-                sh 'npm install'
+
+                withCredentials([string(credentialsId: 'GITHUB_NPM_TOKEN', variable: 'NPM_TOKEN')]) {
+                    sh '''
+                        echo "@maivanhung12c1:registry=https://npm.pkg.github.com" > .npmrc
+                        echo "//npm.pkg.github.com/:_authToken=${NPM_TOKEN}" >> .npmrc
+                        npm install
+                    '''
+                }
             }
         }
 
